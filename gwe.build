@@ -1,0 +1,67 @@
+INSTALL_PATH="/usr/local/bin"
+APP_NAME="gmq_demo"
+APP_VERSION=2
+
+function gwe_build () {
+    echoerr "Creating installer..."
+    cat << EOF > install.sh
+#!/bin/sh
+
+echo "Installing gmq_demo app..."
+set -x
+mkdir -p ${INSTALL_PATH}
+cp gmq_demo.py ${INSTALL_PATH}/
+set +x
+echo "Installation complete."
+
+EOF
+    
+    echoerr "Setting 'x' bit on install.sh..."
+    chmod +x install.sh
+
+    echoerr "Creating supervisor.conf..."
+    cat << EOF > supervisor.conf
+[supervisord]
+command = python -u ${INSTALL_PATH}/gmq_demo.py
+stdout_logfile = /var/log/${APP_NAME}.log
+environment = PATH="\$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+redirect_stderr = true
+stdout_logfile_maxbytes = 200KB
+stdout_logfile_backups = 1
+
+EOF
+
+    echoerr "Creating gwe installable tarball..."
+    TARBALL_FILES=" gmq_demo.py
+                    install.sh
+                    supervisor.conf
+    "
+    TARBALL=${APP_NAME}.v${APP_VERSION}.tar.gz
+    tar zcvf $TARBALL $TARBALL_FILES 1>&2
+
+    echoerr "Cleaning up artifacts..."
+    rm install.sh supervisor.conf
+
+    echoerr "Build complete."
+    echo ${TARBALL}
+}
+
+function deploy_to_gw () {
+
+    # read -p "VENDOR: " VENDOR
+    # read -p "VENDOR_TOKEN: " VENDOR_TOKEN
+    # read -p "MODEL: " MODEL
+    # read -p "GW_CIK: " GW_CIK
+
+    # TARBALL="$(gwe_build)"
+    # exo --vendor=${VENDOR} --vendortoken=${VENDOR_TOKEN} content put ${MODEL} ${TARBALL} ${TARBALL}
+    # exo write $GW_CIK engine_fetch ${TARBALL}
+
+    echo '{"install": [{"name": "gmq_demo.v1.tar.gz"}]}'
+}
+
+
+#
+# Utility Functions
+#
+echoerr() { echo "$@" 1>&2; }
