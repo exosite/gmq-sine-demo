@@ -3,6 +3,13 @@ APP_NAME="gmq_demo"
 APP_VERSION=2
 
 function gwe_build () {
+    USE_GMQ=""
+    read -p "Specify Product ID: " PRODUCT_ID
+    read -p "Specify Serial: " SERIAL
+    # read -p "Use GMQ? (y)" USE_GMQ
+
+    [[ "y" == "${USE_GMQ}" ]] && USE_GMQ='USE_GMQ'
+
     echoerr "Creating installer..."
     cat << EOF > install.sh
 #!/bin/sh
@@ -22,7 +29,7 @@ EOF
     echoerr "Creating supervisor.conf..."
     cat << EOF > supervisor.conf
 [supervisord]
-command = python -u ${INSTALL_PATH}/gmq_demo.py
+command = python -u ${INSTALL_PATH}/gmq_demo.py $PRODUCT_ID $SERIAL $USE_GMQ
 stdout_logfile = /var/log/${APP_NAME}.log
 environment = PATH="\$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 redirect_stderr = true
