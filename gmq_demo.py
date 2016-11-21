@@ -13,7 +13,6 @@ def main(product_id, serial, USING_GMQ):
     except IOError:
         cik = ''
 
-
     if 40 != len(cik):
         stuff = urlencode({'vendor':product_id, 'model':product_id, 'sn':serial})
         r = requests.post(
@@ -25,19 +24,30 @@ def main(product_id, serial, USING_GMQ):
             data=stuff
         )
 
-        print(r.text)
-        with open('gmq_demo.cik','w') as cikfile:
-            cikfile.write(r.text)
+        cik = r.text
+        if 40 != len(cik):
+            print("Got bad cik '{}' from Murano, exiting.".format(cik))
+            sys.exit(-1)
+        print("Got good cik from Murano: {}".format(cik))
 
-    # sys.exit(1)
+        with open('gmq_demo.cik','w') as cikfile:
+            cikfile.write(cik)
 
     while True:
         data = int(100 * cos(radians(time.clock()) * 100))
         print("Writing {} to gmq.".format(data))
 
         r = requests.post(
-            "https://{}.m2.exosite.com/onep:v1/stack/alias".format(product_id),
-            headers= {'X-Exosite-VMS': '{} {} {}'.format(product_id, product_id, serial)} if USING_GMQ else {'X-Exosite-CIK': '{}'.format(cik)},
+            "http{}://{}{}/onep:v1/stack/alias".format(
+                ''                  if USING_GMQ else 's',
+                ''                  if USING_GMQ else product_id+'.',
+                'localhost:8090'    if USING_GMQ else 'm2.exosite.com'
+            ),
+            headers= {
+                'X-Exosite-VMS': '{} {} {}'.format(
+                    product_id, product_id, serial
+                )} if USING_GMQ else {
+                'X-Exosite-CIK': '{}'.format(cik)},
             data={'test':data}
         )
         print(r)

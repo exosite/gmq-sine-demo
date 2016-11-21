@@ -6,7 +6,7 @@ function gwe_build () {
     USE_GMQ=""
     read -p "Specify Product ID: " PRODUCT_ID
     read -p "Specify Serial: " SERIAL
-    # read -p "Use GMQ? (y)" USE_GMQ
+    read -p "Use GMQ? (y)" USE_GMQ
 
     [[ "y" == "${USE_GMQ}" ]] && USE_GMQ='USE_GMQ'
 
@@ -35,6 +35,7 @@ environment = PATH="\$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sb
 redirect_stderr = true
 stdout_logfile_maxbytes = 200KB
 stdout_logfile_backups = 1
+environment = PYTHONUNBUFFERED=NONEMPTYSTRING
 
 EOF
 
