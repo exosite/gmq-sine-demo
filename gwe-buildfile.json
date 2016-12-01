@@ -1,0 +1,12 @@
+{
+  "excludes": [], 
+  "name": "gmq_demo", 
+  "includes": [
+    "gmq_demo.py",
+    "install.sh",
+    "supervisor.conf"
+  ], 
+  "pre_build_cmds": ["source gwe.build && gwe_build"], 
+  "post_build_cmds": ["echo 'Build complete.'"], 
+  "version": "3"
+}
