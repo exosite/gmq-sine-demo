@@ -5,7 +5,7 @@ A simple demo using gmq and gwe.
 To build the app, run the following command:
 
 ```
-source gwe.build && gwe_build
+gwe --build-app gwe-buildfile.json -d DEBUG
 ```
 
 ## Install
@@ -17,11 +17,20 @@ Two ways to install.
 Copy the tarball from the build step onto your gateway and install it via `gwe` cli.
 
 ```
-scp $(source gwe.build && gwe_build) <USER>@<GW_IPADDR>:/tmp
-ssh <USER>@<GW_IPADDR> "cd /tmp ; gwe -d DEBUG -I <TARBALL_NAME>"
+scp $(gwe --build-app gwe-buildfile.json) <USER>@<GW_IPADDR>:/tmp
+ssh <USER>@<GW_IPADDR> "gwe -d DEBUG -I <TARBALL_NAME>"
 ```
 
 ### Over the Air Update/Install
 
-* Upload the content with MrMurano.
-* Execute `source gwe.build && deploy_to_gw` and use the JSON output string in the `engine_fetch` alias.
+Upload the content and deploy with MrMurano.
+
+See [docs.exosite.com](docs.exosite.com) for more information about Gateway Engine and Over-the-air-Updates.
+
+## Add the 'test' Resource
+
+```
+mr config location.specs specs
+mr config product.spec gmq-sine-demo.spec
+mr syncup -V --specs
+```
