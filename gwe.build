@@ -1,15 +1,24 @@
-INSTALL_PATH="/usr/local/bin"
-APP_NAME="gmq_demo"
-APP_VERSION=2
-
 function gwe_build () {
-    USE_GMQ=""
+
+    # #########################
+    # This function prompts 
+    # the user for information
+    # and then builds the gwe
+    # install.sh script and 
+    # supervisor.conf file 
+    # from the user input.
+    # #########################
+
+    # prompt user for input
+    USE_GMQ="y"
     read -p "Specify Product ID: " PRODUCT_ID
     read -p "Specify Serial: " SERIAL
-    read -p "Use GMQ? (y)" USE_GMQ
+    read -p "Specify gateway installation path: " INSTALL_PATH
+    read -p "Use GMQ? (y) " USE_GMQ
 
     [[ "y" == "${USE_GMQ}" ]] && USE_GMQ='USE_GMQ'
 
+    # create the 'install.sh' file
     echoerr "Creating installer..."
     cat << EOF > install.sh
 #!/bin/sh
@@ -22,10 +31,12 @@ set +x
 echo "Installation complete."
 
 EOF
-    
+
+    # set correct mode on 'install.sh' script
     echoerr "Setting 'x' bit on install.sh..."
     chmod +x install.sh
 
+    # create 'supervisor.conf' file
     echoerr "Creating supervisor.conf..."
     cat << EOF > supervisor.conf
 [supervisord]
@@ -39,35 +50,7 @@ environment = PYTHONUNBUFFERED=NONEMPTYSTRING
 
 EOF
 
-    echoerr "Creating gwe installable tarball..."
-    TARBALL_FILES=" gmq_demo.py
-                    install.sh
-                    supervisor.conf
-    "
-    TARBALL=${APP_NAME}.v${APP_VERSION}.tar.gz
-    tar zcvf $TARBALL $TARBALL_FILES 1>&2
-
-    echoerr "Cleaning up artifacts..."
-    rm install.sh supervisor.conf
-
-    echoerr "Build complete."
-    echo ${TARBALL}
 }
-
-function deploy_to_gw () {
-
-    # read -p "VENDOR: " VENDOR
-    # read -p "VENDOR_TOKEN: " VENDOR_TOKEN
-    # read -p "MODEL: " MODEL
-    # read -p "GW_CIK: " GW_CIK
-
-    # TARBALL="$(gwe_build)"
-    # exo --vendor=${VENDOR} --vendortoken=${VENDOR_TOKEN} content put ${MODEL} ${TARBALL} ${TARBALL}
-    # exo write $GW_CIK engine_fetch ${TARBALL}
-
-    echo '{"install": [{"name": "gmq_demo.v1.tar.gz"}]}'
-}
-
 
 #
 # Utility Functions
