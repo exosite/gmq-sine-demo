@@ -7,6 +7,9 @@ function gwe_build () {
     # install.sh script and 
     # supervisor.conf file 
     # from the user input.
+    #
+    # To build, execute:
+    #   gwe --build-app gwe-buildfile.json
     # #########################
 
     # prompt user for input
