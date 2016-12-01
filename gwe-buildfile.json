@@ -7,6 +7,9 @@
     "supervisor.conf"
   ], 
   "pre_build_cmds": ["source gwe.build && gwe_build"], 
-  "post_build_cmds": ["echo 'Build complete.'"], 
+  "post_build_cmds": [
+    "echo 'Build complete. Performing cleanup...'",
+    "rm install.sh supervisor.conf"
+  ], 
   "version": "3"
 }

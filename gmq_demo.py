@@ -41,7 +41,7 @@ def main(product_id, serial, USING_GMQ):
 
     while True:
         test_data = int(100 * cos(radians(time.clock()) * 100))
-        print("Writing {} to gmq.".format(test_data))
+        print("Writing {} to {}}.".format(test_data, "GMQ" if USING_GMQ else "Murano"))
 
         url = "http{}://{}{}/onep:v1/stack/alias".format(
             ''                  if USING_GMQ else 's',
