@@ -29,6 +29,8 @@ See [docs.exosite.com](docs.exosite.com) for more information about Gateway Engi
 
 ## Add the 'test' Resource
 
+You can manually add a single resource to your Gateway Engine test device, or use the commands, below to add it for you.
+
 ```
 mr config location.specs specs
 mr config product.spec gmq-sine-demo.spec
