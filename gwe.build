@@ -14,13 +14,13 @@ function gwe_build () {
 
     # prompt user for input
     USE_GMQ="y"
-    [[ -z "${PRODUCT_ID}" ]]   && read -t 0.1 -p "Specify Product ID: " PRODUCT_ID
+    [[ -z "${PRODUCT_ID}" ]]   && read -t 1 -p "Specify Product ID: " PRODUCT_ID
     echoerr "gmq_sine_demo: PRODUCT_ID: ${PRODUCT_ID}"
-    [[ -z "${SERIAL}" ]]       && read -t 0.1 -p "Specify Serial: " SERIAL
+    [[ -z "${SERIAL}" ]]       && read -t 1 -p "Specify Serial: " SERIAL
     echoerr "gmq_sine_demo: SERIAL: ${SERIAL}"
-    [[ -z "${INSTALL_PATH}" ]] && read -t 0.1 -p "Specify gateway installation path: " INSTALL_PATH
+    [[ -z "${INSTALL_PATH}" ]] && read -t 1 -p "Specify gateway installation path: " INSTALL_PATH
     echoerr "gmq_sine_demo: INSTALL_PATH: ${INSTALL_PATH}"
-    [[ -z "${USE_GMQ}" ]]      && read -t 0.1 -p "Use GMQ? (y) " USE_GMQ
+    [[ -z "${USE_GMQ}" ]]      && read -t 1 -p "Use GMQ? (y) " USE_GMQ
     echoerr "gmq_sine_demo: USE_GMQ: ${USE_GMQ}"
 
     [[ "y" == "${USE_GMQ}" ]] && USE_GMQ='USE_GMQ'
