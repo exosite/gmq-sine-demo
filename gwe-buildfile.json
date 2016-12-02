@@ -8,7 +8,7 @@
   ], 
   "pre_build_cmds": ["source gwe.build && gwe_build"], 
   "post_build_cmds": [
-    "echo 'Build complete. Performing cleanup...'",
+    "echo gmq_demo.v3.tar.gz",
     "rm install.sh supervisor.conf"
   ], 
   "version": "3"
