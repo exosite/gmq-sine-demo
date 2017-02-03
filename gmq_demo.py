@@ -49,11 +49,7 @@ def main(product_id, serial, USING_GMQ):
             'localhost:8090'    if USING_GMQ else 'm2.exosite.com'
         )
 
-        headers = {
-            'X-Exosite-VMS': '{} {} {}'.format(
-                product_id, product_id, serial
-            )} if USING_GMQ else {
-            'X-Exosite-CIK': '{}'.format(cik)}
+        headers = {'X-Exosite-CIK': '{}'.format(cik)}
 
         data = { 'sine-data': test_data }
 
