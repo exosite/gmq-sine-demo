@@ -24,7 +24,7 @@ def main(product_id, serial, USING_GMQ):
             r = requests.post(
                 'https://m2.exosite.com/provision/activate',
                 headers={
-                    'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8', 
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
                     'Content-Length': len(stuff)
                 },
                 data=stuff
@@ -55,7 +55,7 @@ def main(product_id, serial, USING_GMQ):
             )} if USING_GMQ else {
             'X-Exosite-CIK': '{}'.format(cik)}
 
-        data = { 'test': test_data }
+        data = { 'sine-data': test_data }
 
         print("url: {}".format(url))
         print("headers: {}".format(headers))
