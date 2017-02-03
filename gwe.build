@@ -1,11 +1,11 @@
 function gwe_build () {
 
     # #########################
-    # This function prompts 
+    # This function prompts
     # the user for information
     # and then builds the gwe
-    # install.sh script and 
-    # supervisor.conf file 
+    # install.sh script and
+    # supervisor.conf file
     # from the user input.
     #
     # To build, execute:
@@ -13,7 +13,7 @@ function gwe_build () {
     # #########################
 
     # prompt user for input
-    USE_GMQ="y"
+    # USE_GMQ="y"
     [[ -z "${PRODUCT_ID}" ]]   && read -p "Specify Product ID: " PRODUCT_ID
     echoerr "gmq_sine_demo: PRODUCT_ID: ${PRODUCT_ID}"
     [[ -z "${SERIAL}" ]]       && read -p "Specify Serial: " SERIAL
