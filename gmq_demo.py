@@ -5,6 +5,7 @@
 import requests, time, sys
 from urllib import urlencode
 from math import *
+from GatewayEngine.utils import gwe_cik
 
 def main(product_id, serial, USING_GMQ):
 
@@ -12,32 +13,7 @@ def main(product_id, serial, USING_GMQ):
         .format(product_id, serial, USING_GMQ)
     )
 
-    if not USING_GMQ:
-
-        try:
-            cik = open('gmq_demo.cik', 'r').read()
-        except IOError:
-            cik = ''
-
-        if 40 != len(cik):
-            stuff = urlencode({'vendor':product_id, 'model':product_id, 'sn':serial})
-            r = requests.post(
-                'https://m2.exosite.com/provision/activate',
-                headers={
-                    'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-                    'Content-Length': len(stuff)
-                },
-                data=stuff
-            )
-
-            cik = r.text
-            if 40 != len(cik):
-                print("Got bad cik '{}' from Murano, exiting.".format(cik))
-                sys.exit(-1)
-            print("Got good cik from Murano: {}".format(cik))
-
-            with open('gmq_demo.cik','w') as cikfile:
-                cikfile.write(cik)
+    cik = gwe_cik()
 
     while True:
         test_data = int(100 * cos(radians(time.clock()) * 100))
