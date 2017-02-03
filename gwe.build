@@ -14,6 +14,16 @@ function gwe_build () {
 
     # prompt user for input
     # USE_GMQ="y"
+    echoerr ${PRODUCT_ID}
+    echoerr ${SERIAL}
+    echoerr ${INSTALL_PATH}
+    echoerr ${USE_GMQ}
+
+    [[ -z "${PRODUCT_ID}" ]]   && echoerr "Need user input for PRODUCT_ID"
+    [[ -z "${SERIAL}" ]]       && echoerr "Need user input for SERIAL"
+    [[ -z "${INSTALL_PATH}" ]] && echoerr "Need user input for INSTALL_PATH"
+    [[ -z "${USE_GMQ}" ]]      && echoerr "Need user input for USE_GMQ"
+
     [[ -z "${PRODUCT_ID}" ]]   && echoerr "Need user input for PRODUCT_ID" && read -p "Specify Product ID: " PRODUCT_ID
     echoerr "gmq_sine_demo: PRODUCT_ID: ${PRODUCT_ID}"
     [[ -z "${SERIAL}" ]]       && echoerr "Need user input for SERIAL" && read -p "Specify Serial: " SERIAL
