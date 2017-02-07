@@ -1,6 +1,6 @@
 ---
 resources:
-- alias: test
+- alias: sine-data
   format: string
 - alias: usage_report
   format: string
