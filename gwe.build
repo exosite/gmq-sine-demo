@@ -1,45 +1,48 @@
 #!/usr/bin/env bash
 
-function gwe_build () {
+#
+# Utility Functions
+#
+echoerr() { echo "$@" 1>&2; }
 
-    # #########################
-    # This function prompts
-    # the user for information
-    # and then builds the gwe
-    # install.sh script and
-    # supervisor.conf file
-    # from the user input.
-    #
-    # To build, execute:
-    #   gwe --build-app gwe-buildfile.json
-    # #########################
+# #########################
+# This script prompts
+# the user for information
+# and then builds the gwe
+# install.sh script and
+# supervisor.conf file
+# from the user input.
+#
+# To build, execute:
+#   gwe --build-app gwe-buildfile.json
+# #########################
 
-    # prompt user for input
-    # USING_GMQ="y"
-    echoerr ${PRODUCT_ID}
-    echoerr ${SERIAL}
-    echoerr ${INSTALL_PATH}
-    echoerr ${USING_GMQ}
+# prompt user for input
+# USING_GMQ="y"
+echoerr ${PRODUCT_ID}
+echoerr ${SERIAL}
+echoerr ${INSTALL_PATH}
+echoerr ${USING_GMQ}
 
-    [[ -z "${PRODUCT_ID}" ]]   && echoerr "Need user input for PRODUCT_ID"
-    [[ -z "${SERIAL}" ]]       && echoerr "Need user input for SERIAL"
-    [[ -z "${INSTALL_PATH}" ]] && echoerr "Need user input for INSTALL_PATH"
-    [[ -z "${USING_GMQ}" ]]      && echoerr "Need user input for USING_GMQ"
+[[ -z "${PRODUCT_ID}" ]]   && echoerr "Need user input for PRODUCT_ID"
+[[ -z "${SERIAL}" ]]       && echoerr "Need user input for SERIAL"
+[[ -z "${INSTALL_PATH}" ]] && echoerr "Need user input for INSTALL_PATH"
+[[ -z "${USING_GMQ}" ]]      && echoerr "Need user input for USING_GMQ"
 
-    [[ -z "${PRODUCT_ID}" ]]   && echoerr "Need user input for PRODUCT_ID" && read -p "Specify Product ID: " PRODUCT_ID
-    echoerr "gmq_sine_demo: PRODUCT_ID: ${PRODUCT_ID}"
-    [[ -z "${SERIAL}" ]]       && echoerr "Need user input for SERIAL" && read -p "Specify Serial: " SERIAL
-    echoerr "gmq_sine_demo: SERIAL: ${SERIAL}"
-    [[ -z "${INSTALL_PATH}" ]] && echoerr "Need user input for INSTALL_PATH" && read -p "Specify gateway installation path: " INSTALL_PATH
-    echoerr "gmq_sine_demo: INSTALL_PATH: ${INSTALL_PATH}"
-    [[ -z "${USING_GMQ}" ]]      && echoerr "Need user input for USING_GMQ" && read -p "Use GMQ? (y) " USING_GMQ
-    echoerr "gmq_sine_demo: USING_GMQ: ${USING_GMQ}"
+[[ -z "${PRODUCT_ID}" ]]   && echoerr "Need user input for PRODUCT_ID" && read -p "Specify Product ID: " PRODUCT_ID
+echoerr "gmq_sine_demo: PRODUCT_ID: ${PRODUCT_ID}"
+[[ -z "${SERIAL}" ]]       && echoerr "Need user input for SERIAL" && read -p "Specify Serial: " SERIAL
+echoerr "gmq_sine_demo: SERIAL: ${SERIAL}"
+[[ -z "${INSTALL_PATH}" ]] && echoerr "Need user input for INSTALL_PATH" && read -p "Specify gateway installation path: " INSTALL_PATH
+echoerr "gmq_sine_demo: INSTALL_PATH: ${INSTALL_PATH}"
+[[ -z "${USING_GMQ}" ]]      && echoerr "Need user input for USING_GMQ" && read -p "Use GMQ? (y) " USING_GMQ
+echoerr "gmq_sine_demo: USING_GMQ: ${USING_GMQ}"
 
-    [[ "y" == "${USING_GMQ}" ]] && USING_GMQ='USING_GMQ'
+[[ "y" == "${USING_GMQ}" ]] && USING_GMQ='USING_GMQ'
 
-    # create the 'install.sh' file
-    echoerr "Creating installer..."
-    cat << EOF > install.sh
+# create the 'install.sh' file
+echoerr "Creating installer..."
+cat << __EOF__ > install.sh
 #!/bin/sh
 
 echo "Installing gmq_demo app..."
@@ -49,15 +52,15 @@ cp gmq_demo.py ${INSTALL_PATH}/
 set +x
 echo "Installation complete."
 
-EOF
+__EOF__
 
-    # set correct mode on 'install.sh' script
-    echoerr "Setting 'x' bit on install.sh..."
-    chmod +x install.sh
+# set correct mode on 'install.sh' script
+echoerr "Setting 'x' bit on install.sh..."
+chmod +x install.sh
 
-    # create 'supervisor.conf' file
-    echoerr "Creating supervisor.conf..."
-    cat << EOF > supervisor.conf
+# create 'supervisor.conf' file
+echoerr "Creating supervisor.conf..."
+cat << __EOF__ > supervisor.conf
 [supervisord]
 command = python -u ${INSTALL_PATH}/gmq_demo.py $PRODUCT_ID $SERIAL $USING_GMQ
 environment = PATH="\$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
@@ -66,11 +69,5 @@ stdout_logfile_maxbytes = 200KB
 stdout_logfile_backups = 1
 environment = PYTHONUNBUFFERED=NONEMPTYSTRING
 
-EOF
+__EOF__
 
-}
-
-#
-# Utility Functions
-#
-echoerr() { echo "$@" 1>&2; }

@@ -6,7 +6,7 @@
     "install.sh",
     "supervisor.conf"
   ],
-  "pre_build_cmds": ["source gwe.build && gwe_build"],
+  "pre_build_cmds": ["bash gwe.build"],
   "post_build_cmds": [
     "rm install.sh supervisor.conf"
   ],
