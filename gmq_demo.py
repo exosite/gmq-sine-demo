@@ -13,8 +13,6 @@ def main(product_id, serial, USING_GMQ):
         .format(product_id, serial, USING_GMQ)
     )
 
-    cik = gwe_cik()
-
     while True:
         test_data = int(100 * cos(radians(time.clock()) * 100))
         print("Writing {} to {}.".format(test_data, "GMQ" if USING_GMQ else "Murano"))
@@ -25,7 +23,7 @@ def main(product_id, serial, USING_GMQ):
             'localhost:8090'    if USING_GMQ else 'm2.exosite.com'
         )
 
-        headers = {'X-Exosite-CIK': '{}'.format(cik)}
+        headers = {'X-Exosite-CIK': '{}'.format(gwe_cik())}
 
         data = { 'sine-data': test_data }
 

@@ -1,6 +1,10 @@
 # gmq-sine-demo
 A simple demo using gmq and gwe.
 
+## How it works
+
+The app itself is a simple While-True loop that sends sinusoidal data to a `sine-data` resource in your Murano device. To accomplish this, the `gwe.build` script creates the `install.sh` and `supervisor.conf` files for GWE and prompts the user for the information required to run the app. The app is started by `supervisord` (the GWE standard way of starting apps).
+
 ## Build
 To build the app, run the following command:
 
@@ -27,12 +31,16 @@ Upload the content and deploy with MrMurano.
 
 See [docs.exosite.com](docs.exosite.com) for more information about Gateway Engine and Over-the-air-Updates.
 
-## Add the 'test' Resource
+## Add the 'sine-data' Resource
 
-You can manually add a single resource to your Gateway Engine test device, or use the commands, below to add it for you.
+You can manually add a single resource to your Gateway Engine device with the Murano UI, or use the commands, below to add it for you.
 
 ```
 mr config location.specs specs
 mr config product.spec gmq-sine-demo.spec
 mr syncup -V --specs
 ```
+
+
+
+
