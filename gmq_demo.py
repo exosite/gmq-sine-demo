@@ -23,7 +23,10 @@ def main(product_id, serial, USING_GMQ):
             'localhost:8090'    if USING_GMQ else 'm2.exosite.com'
         )
 
-        headers = {'X-Exosite-CIK': '{}'.format(gwe_cik())}
+        headers = {
+            'X-Exosite-CIK': '{}'.format(gwe_cik()),
+            'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+            'Content-Length': len(test_data) }
 
         data = { 'sine-data': test_data }
 
