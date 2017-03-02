@@ -7,10 +7,10 @@ from urllib import urlencode
 from math import *
 from GatewayEngine.utils import gwe_cik
 
-def main(product_id, serial, USING_GMQ):
+def main(product_id, serial, USING_GMQ, CIK):
 
-    print("Starting with product.id: {}, serial: {}, USING_GMQ: {}"
-        .format(product_id, serial, USING_GMQ)
+    print("Starting with product.id: {}, serial: {}, USING_GMQ: {}, CIK: {}"
+        .format(product_id, serial, USING_GMQ, CIK)
     )
 
     while True:
@@ -24,9 +24,9 @@ def main(product_id, serial, USING_GMQ):
         )
 
         headers = {
-            'X-Exosite-CIK': '{}'.format(gwe_cik()),
+            'X-Exosite-CIK': '{}'.format(gwe_cik() if len(CIK) != 40 else CIK),
             'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-            'Content-Length': len(test_data) }
+            'Content-Length': len(str(test_data)) }
 
         data = { 'sine-data': test_data }
 
@@ -45,7 +45,16 @@ if __name__ == '__main__':
 
     USING_GMQ = False
     if len(sys.argv) == 4:
-        USING_GMQ = True if sys.argv[3] == "USING_GMQ" else False
+        if sys.argv[3] == "USING_GMQ":
+            USING_GMQ = True
+        elif sys.argv[3] == "NOT_USING_GMQ":
+            USING_GMQ = False
+        else:
+            USING_GMQ = False
 
-    main(sys.argv[1], sys.argv[2], USING_GMQ)
+    CIK = ''
+    if len(sys.argv) == 5:
+        CIK = sys.argv[4] if len(sys.argv[4]) == 40 else CIK
+
+    main(sys.argv[1], sys.argv[2], USING_GMQ, CIK)
 
