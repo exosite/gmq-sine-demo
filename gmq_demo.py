@@ -24,6 +24,7 @@ def main(product_id, serial, USING_GMQ, CIK):
         )
 
         headers = {
+            'X-Exosite-VMS': '{} {} {}'.format(product_id, product_id, serial),
             'X-Exosite-CIK': '{}'.format(gwe_cik() if len(CIK) != 40 else CIK),
             'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
             'Content-Length': str(len(str(test_data))) }
