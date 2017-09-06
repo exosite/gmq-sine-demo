@@ -36,8 +36,6 @@ See [docs.exosite.com](docs.exosite.com) for more information about Gateway Engi
 You can manually add a single resource to your Gateway Engine device with the Murano UI, or use the commands, below to add it for you.
 
 ```
-mr config location.specs specs
-mr config product.spec gmq-sine-demo.spec
 mr syncup -V --specs
 ```
 
