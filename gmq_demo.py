@@ -20,7 +20,7 @@ def main(product_id, serial, USING_GMQ, CIK):
         url = "http{}://{}{}/onep:v1/stack/alias".format(
             ''                  if USING_GMQ else 's',
             ''                  if USING_GMQ else product_id+'.',
-            'localhost:8090'    if USING_GMQ else 'm2.exosite.com'
+            'localhost:8090'    if USING_GMQ else 'm2.exosite.io'
         )
 
         headers = {
