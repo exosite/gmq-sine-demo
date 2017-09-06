@@ -1,16 +1,22 @@
 ---
-resources:
-- alias: sine-data
-  format: string
-- alias: usage_report
-  format: string
-- alias: engine_report
-  format: string
-- alias: engine_fetch
-  format: string
-- alias: device_info
-  format: string
-- alias: update_interval
-  format: string
-- alias: fetch_status
-  format: string
+  sine-data:
+    format: string
+    settable: false
+  engine_fetch:
+    format: string
+    settable: true
+  update_interval:
+    format: string
+    settable: true
+  device_info:
+    format: string
+    settable: false
+  usage_report:
+    format: string
+    settable: false
+  fetch_status:
+    format: string
+    settable: false
+  engine_report:
+    format: string
+    settable: false
