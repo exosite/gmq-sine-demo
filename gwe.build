@@ -47,7 +47,7 @@ cat << __EOF__ > install.sh
 
 echo "Installing gmq_demo app..."
 set -x
-mkdir -p ${INSTALL_PATH}
+[ -d ${INSTALL_PATH} ] || mkdir -p ${INSTALL_PATH}
 cp gmq_demo.py ${INSTALL_PATH}/
 set +x
 echo "Installation complete."
