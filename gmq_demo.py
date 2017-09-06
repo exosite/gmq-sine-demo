@@ -37,7 +37,7 @@ def main(product_id, serial, USING_GMQ, CIK):
 
         r = requests.post(url,headers=headers,data=data)
         print(r)
-        time.sleep(5)
+        time.sleep(1)
 
 if __name__ == '__main__':
     if len(sys.argv) < 3:
