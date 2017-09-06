@@ -10,5 +10,5 @@
   "post_build_cmds": [
     "rm install.sh supervisor.conf"
   ],
-  "version": "4"
+  "version": "5"
 }
